@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 async function fetchComments(postId) {
   const response = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
@@ -26,13 +26,26 @@ export function PostDetail({ post }) {
     fetchComments(post.id)
   );
 
+  // DELETE Mutation
+  const deleteMutation = useMutation((postId) => deletePost(postId));
+
+  //  PATCH Mutation
+  const updateMutation = useMutation((postId) => updatePost(postId));
+
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Something went wrong...</div>;
 
   return (
     <>
       <h3 style={{ color: 'blue' }}>{post.title}</h3>
-      <button>Delete</button> <button>Update title</button>
+      <button onClick={() => deleteMutation.mutate(post.id)}>Delete</button>
+      {deleteMutation.isLoading && <div>Deleting the post...</div>}
+      {deleteMutation.isError && <div>Error deleting the post</div>}
+      {deleteMutation.isSuccess && <div>Post has (not) been deleted</div>}
+      <button onClick={() => updateMutation.mutate(post.id)}>Update title</button>
+      {updateMutation.isLoading && <div>Updating the post...</div>}
+      {updateMutation.isError && <div>Error updating the post</div>}
+      {updateMutation.isSuccess && <div>Post has (not) been updated</div>}
       <p>{post.body}</p>
       <h4>Comments</h4>
       {data.map((comment) => (
