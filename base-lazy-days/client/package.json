@@ -69,5 +69,8 @@
   },
   "jest": {
     "resetMocks": false
+  },
+  "devDependencies": {
+    "@tanstack/react-query-devtools": "^4.24.10"
   }
 }

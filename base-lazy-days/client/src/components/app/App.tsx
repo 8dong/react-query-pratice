@@ -1,5 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ReactElement } from 'react';
 
 import { queryClient } from '../../react-query/queryClient';
@@ -15,6 +16,7 @@ export function App(): ReactElement {
         <Navbar />
         <Loading />
         <Routes />
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </ChakraProvider>
   );
